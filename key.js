@@ -5,8 +5,9 @@ class Key {
         this.y = y;
         this.x_size = x_size;
         this.y_size = y_size;
+        this.highlighted = false;
     }
     draw(ctx) {
-        graphics.draw_key(ctx, this.x, this.y, this.x_size, this.y_size, this.type);
+        graphics.draw_key(ctx, this.x, this.y, this.x_size, this.y_size, this.type, this.highlighted);
     }
 }

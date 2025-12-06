@@ -30,6 +30,14 @@ class Piano {
         return this.wkey_l + this.frame_margin;
     }
 
+    stagger(val) {
+        let i = 0;
+        for (let key of this.ordered_keys) {
+            key.y -= (20 + i*val);
+            i++;
+        }
+    }
+
     build_keys() {
 
         let start_x = this.x - (NUM_WHITE_KEYS * this.wkey_w + (NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
@@ -84,13 +92,13 @@ class Piano {
         let b_idx = 0;
         let merged = [];
         
-        while (w_idx < NUM_WHITE_KEYS - 1) {
+        while ((w_idx < NUM_WHITE_KEYS) && (b_idx < NUM_BLACK_KEYS)) {
 
-            if (this.white_keys[w_idx].x <= this.black_keys[b_idx]) {
+            if (this.white_keys[w_idx].x <= this.black_keys[b_idx].x) {
 
                 merged.push(this.white_keys[w_idx++]);
 
-                while (this.white_keys[w_idx].x <= this.black_keys[b_idx]) {
+                while ((w_idx < NUM_WHITE_KEYS) && (this.white_keys[w_idx].x <= this.black_keys[b_idx].x)) {
                     merged.push(this.white_keys[w_idx++]);
                 }
                 
@@ -99,11 +107,18 @@ class Piano {
 
                 merged.push(this.black_keys[b_idx++]);
 
-                while (this.white_keys[w_idx].x > this.black_keys[b_idx]) {
+                while ((b_idx < NUM_BLACK_KEYS) && (this.white_keys[w_idx].x > this.black_keys[b_idx].x)) {
                     merged.push(this.black_keys[b_idx++]);
                 }
-
             }
+        }
+
+        while (w_idx < NUM_WHITE_KEYS) {
+            merged.push(this.white_keys[w_idx++])       
+        }
+
+        while (b_idx < NUM_BLACK_KEYS) {
+            merged.push(this.black_keys[b_idx++])       
         }
 
         return merged;
