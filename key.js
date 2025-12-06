@@ -7,7 +7,16 @@ class Key {
         this.y_size = y_size;
         this.highlighted = false;
     }
+    press() {
+        this.highlighted = true;
+    }
+    release() {
+        this.highlighted = false;
+    }
+    draw_highlight(ctx) {
+        graphics.draw_rect_highlight(ctx, this.x, this.y, this.x_size, this.y_size);
+    }
     draw(ctx) {
-        graphics.draw_key(ctx, this.x, this.y, this.x_size, this.y_size, this.type, this.highlighted);
+        graphics.draw_key(ctx, this.x, this.y, this.x_size, this.y_size, this.type);
     }
 }

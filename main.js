@@ -18,11 +18,19 @@ const FRAME_COLOR = "rgb(75, 75, 75)";
 let piano = new Piano();
 let FRAME_COUNT = 0;
 
+let highlight_interval = 15;
+
 
 function frame() {
+
     clear();
     center_lines();
+
+    piano.release_keys();
+    piano.press_key(Math.trunc(FRAME_COUNT / highlight_interval) % 88)
     piano.draw(ctx);
+
+
     FRAME_COUNT++;
 }
 
