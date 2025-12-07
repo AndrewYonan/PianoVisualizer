@@ -14,11 +14,12 @@ const BLACK_KEY_RATIO = 7;
 const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
 const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
 const FRAME_COLOR = "rgb(75, 75, 75)";
+let KEY_PRESS_COLOR = "rgb(255, 106, 106)";
 
 let piano = new Piano();
 let FRAME_COUNT = 0;
 
-let highlight_interval = 15;
+let highlight_interval = 20;
 
 
 function frame() {

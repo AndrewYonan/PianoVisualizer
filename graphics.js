@@ -14,17 +14,17 @@ class Graphics {
 
     draw_rect_highlight(ctx,x,y,x_size,y_size) {
 
-        let r = 100;
-        let g = 200;
-        let b = 500;
-        let a = 50;
-        let size = 1;
-        let space = 5;
-        ctx.lineWidth = 3;
-
+        let a_start = 0.7;
+        let size = 16;
+        let space = 1;
+        ctx.lineWidth = 2;
 
         for (let i = 0; i < size; ++i) {
-            ctx.strokeStyle = `rgba(${r},${g},${b},${Math.trunc(a - 50/size * i)})`;
+
+            const [r, g, b] = KEY_PRESS_COLOR.match(/\d+/g).map(Number);
+            let a = a_start*(1 - (i/(size-1)));
+
+            ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
             ctx.beginPath();
             ctx.rect(x - i*space, y - i*space, x_size + space*2*i, y_size + space*2*i);
             ctx.stroke();
