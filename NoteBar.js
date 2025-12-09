@@ -16,7 +16,7 @@ class NoteBar {
 
     draw() {
         let y = Math.min(this.y, this.disintegration_height);
-        graphics.draw_note_bar(this.x, this.y, this.width, this.height);
+        graphics.draw_note_bar(this.x, this.y, this.width, this.height, this.color);
     }
 
     update() {

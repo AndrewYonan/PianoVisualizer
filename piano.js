@@ -188,7 +188,7 @@ class Piano {
     draw(ctx) {
         this.draw_frame(ctx);
         this.draw_keys(ctx);
-        this.draw_hit_line(ctx);
+        // this.draw_hit_line(ctx);
         this.draw_effects(ctx);
     }
 

@@ -15,22 +15,40 @@ class Graphics {
     draw_vertical_gradient_highlight(ctx, x, y, x_size, y_size, color) {
 
         let a_start = 0.7;
-        let size = 16;
-        let space = 1;
         ctx.lineWidth = 2;
 
-        for (let i = 0; i < size; ++i) {
+        for (let i = 0; i < y_size; ++i) {
 
             const [r, g, b] = color.match(/\d+/g).map(Number);
-            let a = a_start*(1 - (i/(size-1)));
+            let a = a_start * (1 - (i / (y_size - 1)));
 
             ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
             ctx.beginPath();
-            ctx.rect(x - i*space, y - i*space, x_size + space*2*i, y_size + space*2*i);
+            ctx.moveTo(x, y + i);
+            ctx.lineTo(x + x_size, y + i);
             ctx.stroke();
         }
 
     }   
+    
+    draw_note_strike_gradient(ctx, x, y, x_size, color) {
+
+        let a_start = 0.7;
+        let height = 20;
+        ctx.lineWidth = 2;
+
+        for (let i = 0; i < height; ++i) {
+
+            const [r, g, b] = color.match(/\d+/g).map(Number);
+            let a = a_start * (1 - (i / (height - 1)));
+
+            ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
+            ctx.beginPath();
+            ctx.moveTo(x - i, y - i);
+            ctx.lineTo(x + x_size + i, y - i);
+            ctx.stroke();
+        }
+    }
 
     draw_rect_highlight(ctx, x, y, x_size, y_size) {
 
@@ -86,8 +104,8 @@ class Graphics {
 
     }
 
-    draw_note_bar(x, y, width, height) {
-        ctx.fillStyle = "rgb(255, 45, 45)"
+    draw_note_bar(x, y, width, height, color) {
+        ctx.fillStyle = color;
         ctx.beginPath();
         ctx.rect(x, y - height, width, height);
         ctx.fill();

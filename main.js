@@ -14,7 +14,7 @@ const BLACK_KEY_RATIO = 7;
 const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
 const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
 const FRAME_COLOR = "rgb(75, 75, 75)";
-const BAR_COLOR = "rgb(255, 106, 106)";
+const BAR_COLOR = "rgb(237, 68, 53)";
 const BAR_SPEED = 3;
 
 let piano = new Piano();
