@@ -142,6 +142,18 @@ class Piano {
         }
     }
 
+    draw_top_line(ctx) {   
+
+        let start_x = this.x - (NUM_WHITE_KEYS * this.wkey_w + (NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
+        let start_y = this.y - (this.wkey_l)/2;
+
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(start_x, start_y);
+        ctx.lineTo(start_x + 2*(W/2 - start_x), start_y);
+        ctx.stroke();
+    }
+
     draw_frame(ctx) {
         ctx.lineWidth = 1;
         ctx.fillStyle = FRAME_COLOR;
@@ -157,9 +169,10 @@ class Piano {
     }
 
     draw(ctx) {
-        this.draw_frame(ctx);
-        this.draw_keys(ctx);
-        this.draw_effects(ctx);
+        // this.draw_frame(ctx);
+        // this.draw_keys(ctx);
+        this.draw_top_line(ctx);
+        // this.draw_effects(ctx);
     }
 
 }
