@@ -25,11 +25,13 @@ def main():
 
             for msg in inport:
 
-                t = time.perf_counter() - start
-                event_entry = "\t\t\t{" + f"note: {msg.note}, " + f"time: {t:.6f}, " + f"velocity: {msg.velocity}" + "},\n"
+                if msg.type in ("note_on", "note_off"):
 
-                print(event_entry)
-                js_event_array += event_entry
+                    t = time.perf_counter() - start
+                    event_entry = "\t\t\t{" + f"note: {msg.note}, " + f"time: {t:.6f}, " + f"velocity: {msg.velocity}" + "},\n"
+
+                    print(event_entry)
+                    js_event_array += event_entry
 
 
     except KeyboardInterrupt:
