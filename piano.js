@@ -33,10 +33,18 @@ class Piano {
         this.ordered_keys[i].press();
     }
 
+    unpress_key(i) {
+        this.ordered_keys[i].release();
+    }
+
     release_keys() {
         for (let key of this.ordered_keys) {
             key.release();
         }
+    }
+
+    set_key_LED_color(key, color) {
+        this.ordered_keys[key].set_LED_color(color);
     }
 
     get_frame_size_x() {
@@ -181,7 +189,7 @@ class Piano {
         this.draw_frame(ctx);
         this.draw_keys(ctx);
         this.draw_hit_line(ctx);
-        // this.draw_effects(ctx);
+        this.draw_effects(ctx);
     }
 
 }

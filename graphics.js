@@ -12,7 +12,27 @@ class Graphics {
         ctx.fill();
     }
 
-    draw_rect_highlight(ctx,x,y,x_size,y_size) {
+    draw_vertical_gradient_highlight(ctx, x, y, x_size, y_size, color) {
+
+        let a_start = 0.7;
+        let size = 16;
+        let space = 1;
+        ctx.lineWidth = 2;
+
+        for (let i = 0; i < size; ++i) {
+
+            const [r, g, b] = color.match(/\d+/g).map(Number);
+            let a = a_start*(1 - (i/(size-1)));
+
+            ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
+            ctx.beginPath();
+            ctx.rect(x - i*space, y - i*space, x_size + space*2*i, y_size + space*2*i);
+            ctx.stroke();
+        }
+
+    }   
+
+    draw_rect_highlight(ctx, x, y, x_size, y_size) {
 
         let a_start = 0.7;
         let size = 16;

@@ -11,7 +11,7 @@ class Clock {
         this.speed = 1;
         this.ERROR_ADJUST = 1.04; // why tf do i need this?
 
-        this.speed /= this.ERROR_ADJUST;
+        // this.speed /= this.ERROR_ADJUST;
         
 
     }

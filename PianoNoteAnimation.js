@@ -8,7 +8,6 @@ class PianoNoteAnimation {
         this.bar_speed = bar_speed;
         this.paused = false;
         this.frame_rate = frame_rate;
-        this.NOTE_MAX = 10;
 
         this.create_note_bars();
 
@@ -24,19 +23,23 @@ class PianoNoteAnimation {
             let duration = note_press.duration;
             let piano_key = this.piano.get_key(note);
 
-            console.log(note, start_time, duration);
-
             let pixels_per_second = this.bar_speed * this.frame_rate;
             let x = piano_key.x;
             let y = this.piano.break_line_y() - (start_time * pixels_per_second);
-            let bar_height = 20;
+            let bar_height = duration * (pixels_per_second);
             let bar_width = piano_key.x_size;
 
-            let bar = new NoteBar(x, y, bar_width, bar_height, this.bar_speed);
+            let bar = new NoteBar(note, x, y, bar_width, bar_height, this.bar_speed, this.piano.break_line_y());
             this.note_bars.push(bar);
 
         }
 
+    }
+
+    restart() {
+        this.note_bars = [];
+        this.create_note_bars();
+        this.piano.release_keys();
     }
 
     pause() {
@@ -48,8 +51,25 @@ class PianoNoteAnimation {
     }
 
     update() {
-        for (let i = 0; i < this.note_bars.length; ++i) {
-            this.note_bars[i].update();
+        let i = 0;
+        while (i < this.note_bars.length) {
+
+            let key = this.note_bars[i].note
+
+            if (this.note_bars[i].disintegrated) {
+                this.piano.unpress_key(key);
+                this.note_bars.splice(i,1);
+            }
+            else if (this.note_bars[i].hitting_key) {
+                this.note_bars[i].update();
+                this.piano.press_key(key);
+                this.piano.set_key_LED_color(key, this.note_bars[i].color);
+                i++;
+            }
+            else {
+                this.note_bars[i].update();
+                i++;
+            }
         }
     }
 
