@@ -15,6 +15,7 @@ const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
 const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
 const FRAME_COLOR = "rgb(75, 75, 75)";
 const KEY_PRESS_COLOR = "rgb(255, 106, 106)";
+const BAR_SPEED = 10;
 
 let piano = new Piano();
 let FRAME = 0;
@@ -23,8 +24,13 @@ let highlight_interval = 20;
 let midi_dump = new MIDI_DUMP();
 let time_chart_generator = new TimeChartGenerator(midi_dump.EVENTS);
 let time_chart = time_chart_generator.generate();
-let animation = new PianoNoteAnimation(piano, time_chart);
+
+console.log("TIME CHART ", time_chart);
+
+let animation = new PianoNoteAnimation(piano, time_chart, BAR_SPEED, FRAME_RATE);
 let clock = new Clock(W - 200, 100, FRAME_RATE);
+
+
 
 
 function frame() {
@@ -35,11 +41,21 @@ function frame() {
     clock.draw(ctx);
     clock.update(FRAME);
 
+    animation.update();
+    animation.draw();
+
+    if (FRAME == 10) {
+        console.log(animation.note_bars);
+    }
+
+    // graphics.mark_point(piano.get_x_pos(3), piano.break_line_y());
+
     FRAME++;
 }
 
 
 function center_lines() {
+    ctx.strokeStyle = "rgb(33, 33, 33)";
     ctx.lineWidth = 0.1;
     line(0, H/2, W, H/2);
     line(W/2, 0, H, W/2);

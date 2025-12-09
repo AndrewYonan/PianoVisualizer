@@ -73,6 +73,13 @@ class Graphics {
         ctx.fill();
     }
 
+    mark_point(x, y) {
+        ctx.strokeStyle = "red";
+        ctx.beginPath()
+        ctx.arc(x, y, 10, 0, 2*Math.PI, true);
+        ctx.stroke();
+    }
+
     rect(ctx, x,y,x_scale,y_scale) {
         ctx.beginPath()
         ctx.rect(x,y,x_scale,y_scale);

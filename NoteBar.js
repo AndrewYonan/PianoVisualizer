@@ -13,6 +13,6 @@ class NoteBar {
     }
 
     update() {
-        this.y += fall_speed;
+        this.y += this.fall_speed;
     }
 }
