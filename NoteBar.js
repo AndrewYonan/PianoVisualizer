@@ -10,13 +10,13 @@ class NoteBar {
         this.disintegration_height = disintegration_height;
         this.disintegrated = false;
         this.hitting_key = false;
-
         this.color = BAR_COLOR;
+        this.bar_rounding = 4;
     }
 
-    draw() {
+    draw(ctx) {
         let y = Math.min(this.y, this.disintegration_height);
-        graphics.draw_note_bar(this.x, this.y, this.width, this.height, this.color);
+        graphics.draw_note_bar(ctx, this.x, y, this.width, this.height, this.bar_rounding, this.color);
     }
 
     update() {

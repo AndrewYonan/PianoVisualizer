@@ -1,15 +1,14 @@
 const canvas = document.getElementById("canvas");
-const BG_MAIN_COLOR = "rgb(246, 246, 246)"
+const BG_MAIN_COLOR = "rgb(32, 32, 32)"
 const FRAME_RATE = 60;
 const W = 1200;
 const H = 600;
 const graphics = new Graphics();
 const iterator = setInterval(frame, 1000 / FRAME_RATE);
-const ctx = build_canvas(canvas, adaptive_res=false);
+const ctx = build_canvas(canvas, adaptive_res=true);
 const NUM_WHITE_KEYS = 52;
 const NUM_BLACK_KEYS = 36;
 const WHITE_KEY_RATIO = 6.4;
-const BLACK_KEY_RATIO = 7;
 
 const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
 const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
@@ -37,13 +36,13 @@ init_event_handlers();
 function frame() {
 
     clear();
-    center_lines();
+    // center_lines();
     piano.draw(ctx);
     clock.draw(ctx);
     clock.update(FRAME);
 
     if (!PAUSED) animation.update();
-    animation.draw();
+    animation.draw(ctx);
 
     if (!PAUSED) FRAME++;
 }

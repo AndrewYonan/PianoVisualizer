@@ -76,8 +76,8 @@ class Graphics {
     draw_clock(ctx, minutes, seconds, milliseconds, x, y) {
 
         const font_size = 30;
-        ctx.font = `${font_size}px "Times New Roman "`;
-        ctx.fillStyle = "#000";
+        ctx.font = `${font_size}px "Times New Roman"`;
+        ctx.fillStyle = "#888";
 
         const minutes_len = minutes.toString().length;
         let minutes_spacing = this.get_space(minutes_len, font_size);
@@ -104,10 +104,10 @@ class Graphics {
 
     }
 
-    draw_note_bar(x, y, width, height, color) {
+    draw_note_bar(ctx, x, y, width, height, rounding, color) {
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.rect(x, y - height, width, height);
+        this.rounded_rect(ctx, x, y - height, width, height, rounding, color);
         ctx.fill();
     }
 
@@ -121,7 +121,29 @@ class Graphics {
     rect(ctx, x,y,x_scale,y_scale) {
         ctx.beginPath()
         ctx.rect(x,y,x_scale,y_scale);
-        ctx.stroke();
+        // ctx.stroke();
         ctx.fill();
+    }
+
+    rounded_rect(ctx, x, y, width, height, border_radius, color) {
+        ctx.fillStyle = color;
+        if (border_radius > 0) {
+            ctx.beginPath();
+            ctx.moveTo(x + border_radius, y);
+            ctx.lineTo(x + width - border_radius, y); 
+            ctx.quadraticCurveTo(x + width, y, x + width, y + border_radius); 
+            ctx.lineTo(x + width, y + height - border_radius); 
+            ctx.quadraticCurveTo(x + width, y + height, x + width - border_radius, y + height);
+            ctx.lineTo(x + border_radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - border_radius);
+            ctx.lineTo(x, y + border_radius); 
+            ctx.quadraticCurveTo(x, y, x + border_radius, y);
+            ctx.closePath();
+        } 
+        else {
+            ctx.beginPath();
+            ctx.rect(x, y, width, height);
+            ctx.closePath();
+        }
     }
 }

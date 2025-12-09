@@ -73,9 +73,9 @@ class PianoNoteAnimation {
         }
     }
 
-    draw() {  
+    draw(ctx) {  
         for (let i = 0; i < this.note_bars.length; ++i) {
-            this.note_bars[i].draw();
+            this.note_bars[i].draw(ctx);
         }
     }
 }
