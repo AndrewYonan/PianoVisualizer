@@ -18,18 +18,19 @@ class Piano {
         this.white_keys = [];
         this.black_keys = [];
         this.build_keys();
-
         this.ordered_keys = this.merge_white_and_black_keys();
     }
     
     press_key(i) {
         this.ordered_keys[i].press();
     }
+
     release_keys() {
         for (let key of this.ordered_keys) {
             key.release();
         }
     }
+
     get_frame_size_x() {
         return (this.wkey_w * NUM_WHITE_KEYS + this.wkey_spacing * (NUM_WHITE_KEYS - 1)) + this.frame_margin;
     }
@@ -140,11 +141,13 @@ class Piano {
             key.draw(ctx);
         }
     }
+
     draw_frame(ctx) {
         ctx.lineWidth = 1;
         ctx.fillStyle = FRAME_COLOR;
         graphics.rect(ctx, this.x - this.frame_size_x / 2, this.y - this.frame_size_y / 2, this.frame_size_x, this.frame_size_y);
     }
+
     draw_effects(ctx) {
         for (const key of this.ordered_keys) {
             if (key.highlighted) {
@@ -152,6 +155,7 @@ class Piano {
             }
         }
     }
+
     draw(ctx) {
         this.draw_frame(ctx);
         this.draw_keys(ctx);
