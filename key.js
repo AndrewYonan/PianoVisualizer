@@ -5,7 +5,7 @@ class Key {
         this.y = y;
         this.x_size = x_size;
         this.y_size = y_size;
-        this.highlighted = false;
+        this.pressed = false;
         this.LED_color = "rgb(255,255,255)";
     }
 
@@ -14,11 +14,11 @@ class Key {
     }
 
     press() {
-        this.highlighted = true;
+        this.pressed = true;
     }
 
     release() {
-        this.highlighted = false;
+        this.pressed = false;
     }
 
     draw_highlight(ctx) {

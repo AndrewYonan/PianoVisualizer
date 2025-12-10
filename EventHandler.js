@@ -20,8 +20,9 @@ function init_event_handlers() {
             await audio_context.resume();
         }
     
-        if (!audio_buf) {
-            await load_audio_buf();
+        if (!note_buffers_loaded) {
+            await load_all_notes();
+            note_buffers_loaded = true;
         }
 
     });

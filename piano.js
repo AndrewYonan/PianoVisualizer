@@ -1,5 +1,5 @@
 class Piano {
-    constructor(x, y) {
+    constructor(x, y, sound_bank) {
         
         this.NUM_WHITE_KEYS = 52;
         this.NUM_BLACK_KEYS = 36;
@@ -23,6 +23,8 @@ class Piano {
         this.black_keys = [];
         this.build_keys();
         this.ordered_keys = this.merge_white_and_black_keys();
+
+        this.sound_bank = sound_bank;
     }
 
     break_line_y() {
@@ -33,12 +35,18 @@ class Piano {
         return this.ordered_keys[note];
     }
     
-    press_key(i) {
+    press_key(i, duration) {
+        this.sound_bank.play_sound(i, duration);
+        // play_sound("c6", Math.max(duration, 0.5), 0.5);
         this.ordered_keys[i].press();
     }
 
-    unpress_key(i) {
+    release_key(i) {
         this.ordered_keys[i].release();
+    }
+
+    is_pressed(i) {
+        return this.ordered_keys[i].pressed;
     }
 
     release_keys() {
@@ -166,13 +174,10 @@ class Piano {
 
         let start_x = this.x - (this.NUM_WHITE_KEYS * this.wkey_w + (this.NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
         let start_y = this.break_line_y();
+        let end_x = start_x + 2*(W/2 - start_x);
+        let end_y = start_y;
 
-        ctx.strokeStyle = "rgb(255, 12, 12)";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(start_x, start_y);
-        ctx.lineTo(start_x + 2*(W/2 - start_x), start_y);
-        ctx.stroke();
+        graphics.draw_piano_hit_line(ctx, start_x, start_y, end_x, end_y);
     }
 
     draw_frame(ctx) {
@@ -182,9 +187,9 @@ class Piano {
     }
 
     draw_effects(ctx) {
-        for (const key of this.ordered_keys) {
-            if (key.highlighted) {
-                key.draw_highlight(ctx);
+        for (let i = 0; i < this.ordered_keys.length; ++i) {
+            if (this.is_pressed(i)) {
+                this.ordered_keys[i].draw_highlight(ctx);
             }
         }
     }
@@ -192,7 +197,7 @@ class Piano {
     draw(ctx) {
         this.draw_frame(ctx);
         this.draw_keys(ctx);
-        // this.draw_hit_line(ctx);
+        this.draw_hit_line(ctx);
         this.draw_effects(ctx);
     }
 

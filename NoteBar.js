@@ -1,7 +1,9 @@
 class NoteBar {
 
-    constructor(note, x, y, width, height, fall_speed, disintegration_height) {
+    constructor(note, duration, x, y, width, height, fall_speed, disintegration_height) {
+
         this.note = note;
+        this.duration = duration;
         this.x = x;
         this.y = y;
         this.width = width;

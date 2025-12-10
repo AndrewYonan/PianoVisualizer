@@ -57,6 +57,15 @@ class Graphics {
         ctx.fill();
     }
 
+    draw_piano_hit_line(ctx, start_x, start_y, end_x, end_y) {
+        ctx.strokeStyle = BAR_COLOR;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(start_x, start_y);
+        ctx.lineTo(end_x, end_y);
+        ctx.stroke();
+    }
+
     draw_vertical_gradient_highlight(ctx, x, y, x_size, y_size, color) {
 
         let a_start = 0.7;
