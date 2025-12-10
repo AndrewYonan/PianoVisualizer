@@ -1,19 +1,23 @@
 class Piano {
-    constructor() {
+    constructor(x, y) {
         
-        this.wkey_spacing = 1;
+        this.NUM_WHITE_KEYS = 52;
+        this.NUM_BLACK_KEYS = 36;
+        this.WHITE_KEY_RATIO = 6.2;
+        this.BLACK_KEY_RATIO = 0.667;
 
-        this.wkey_w = 20;
-        this.wkey_l = this.wkey_w * WHITE_KEY_RATIO;
+        this.wkey_spacing = 1;
+        this.wkey_w = 18;
+        this.wkey_l = this.wkey_w * this.WHITE_KEY_RATIO;
         this.frame_margin = 20;
 
         this.bkey_w = this.wkey_w/2;
-        this.bkey_l = this.wkey_l * 2/3;
+        this.bkey_l = this.wkey_l * this.BLACK_KEY_RATIO;
         
         this.frame_size_x = this.get_frame_size_x();
         this.frame_size_y = this.get_frame_size_y();
-        this.x = W/2;
-        this.y = H/2 + 150;
+        this.x = x
+        this.y = y;
 
         this.white_keys = [];
         this.black_keys = [];
@@ -48,7 +52,7 @@ class Piano {
     }
 
     get_frame_size_x() {
-        return (this.wkey_w * NUM_WHITE_KEYS + this.wkey_spacing * (NUM_WHITE_KEYS - 1)) + this.frame_margin;
+        return (this.wkey_w * this.NUM_WHITE_KEYS + this.wkey_spacing * (this.NUM_WHITE_KEYS - 1)) + this.frame_margin;
     }
 
     get_frame_size_y() {
@@ -65,7 +69,7 @@ class Piano {
 
     build_keys() {
 
-        let start_x = this.x - (NUM_WHITE_KEYS * this.wkey_w + (NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
+        let start_x = this.x - (this.NUM_WHITE_KEYS * this.wkey_w + (this.NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
         let start_y = this.y - (this.wkey_l)/2
         this.build_white_keys(start_x, start_y);
         this.build_black_keys(start_x, start_y);
@@ -74,7 +78,7 @@ class Piano {
 
     build_black_keys(start_x, start_y) {
 
-        let num_octaves = (NUM_WHITE_KEYS - 3)/7;
+        let num_octaves = (this.NUM_WHITE_KEYS - 3)/7;
         let octave_start = start_x;
     
         for (let i = 0; i < num_octaves; ++i) {
@@ -105,7 +109,7 @@ class Piano {
     }
 
     build_white_keys(start_x, start_y) {
-        for (let i = 0; i < NUM_WHITE_KEYS; ++i) {
+        for (let i = 0; i < this.NUM_WHITE_KEYS; ++i) {
             let key = new Key(start_x + i*(this.wkey_w + this.wkey_spacing), start_y, this.wkey_w, this.wkey_l, 0);
             this.white_keys.push(key);
         }
@@ -117,13 +121,13 @@ class Piano {
         let b_idx = 0;
         let merged = [];
         
-        while ((w_idx < NUM_WHITE_KEYS) && (b_idx < NUM_BLACK_KEYS)) {
+        while ((w_idx < this.NUM_WHITE_KEYS) && (b_idx < this.NUM_BLACK_KEYS)) {
 
             if (this.white_keys[w_idx].x <= this.black_keys[b_idx].x) {
 
                 merged.push(this.white_keys[w_idx++]);
 
-                while ((w_idx < NUM_WHITE_KEYS) && (this.white_keys[w_idx].x <= this.black_keys[b_idx].x)) {
+                while ((w_idx < this.NUM_WHITE_KEYS) && (this.white_keys[w_idx].x <= this.black_keys[b_idx].x)) {
                     merged.push(this.white_keys[w_idx++]);
                 }
                 
@@ -132,17 +136,17 @@ class Piano {
 
                 merged.push(this.black_keys[b_idx++]);
 
-                while ((b_idx < NUM_BLACK_KEYS) && (this.white_keys[w_idx].x > this.black_keys[b_idx].x)) {
+                while ((b_idx < this.NUM_BLACK_KEYS) && (this.white_keys[w_idx].x > this.black_keys[b_idx].x)) {
                     merged.push(this.black_keys[b_idx++]);
                 }
             }
         }
 
-        while (w_idx < NUM_WHITE_KEYS) {
+        while (w_idx < this.NUM_WHITE_KEYS) {
             merged.push(this.white_keys[w_idx++])       
         }
 
-        while (b_idx < NUM_BLACK_KEYS) {
+        while (b_idx < this.NUM_BLACK_KEYS) {
             merged.push(this.black_keys[b_idx++])       
         }
 
@@ -160,7 +164,7 @@ class Piano {
 
     draw_hit_line(ctx) {   
 
-        let start_x = this.x - (NUM_WHITE_KEYS * this.wkey_w + (NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
+        let start_x = this.x - (this.NUM_WHITE_KEYS * this.wkey_w + (this.NUM_WHITE_KEYS - 1) * this.wkey_spacing)/2;
         let start_y = this.break_line_y();
 
         ctx.strokeStyle = "rgb(255, 12, 12)";

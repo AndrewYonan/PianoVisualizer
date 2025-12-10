@@ -1,4 +1,49 @@
+
+
+const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
+const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
+const FRAME_COLOR = "rgb(75, 75, 75)";
+const BAR_COLOR = "rgb(255, 255, 255)";
+
+
+
 class Graphics {
+
+    clear(ctx) {
+        ctx.clearRect(0,0,W,H);
+    }
+
+    build_canvas(canvas, adaptive_res) {
+
+        const dpr = window.devicePixelRatio || 1; 
+    
+        if (adaptive_res) {
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+        }
+        else {
+            canvas.width = W;
+            canvas.height = H;
+        }
+        
+        canvas.style.width = W + "px";
+        canvas.style.height = H + "px";
+        
+        canvas.style.position = "absolute";
+        canvas.style.left = "50%";
+        canvas.style.transform = "translateX(-50%)"
+        canvas.style.backgroundColor = BG_MAIN_COLOR;;
+    
+        const ctx = canvas.getContext('2d');
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+    
+        if (adaptive_res) {
+            ctx.scale(dpr, dpr);
+        }
+    
+        return ctx;
+    }
 
     draw_key(ctx, x, y, x_size, y_size, type) {
         if (type == 0) {
@@ -44,8 +89,8 @@ class Graphics {
 
             ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
             ctx.beginPath();
-            ctx.moveTo(x - i, y - i);
-            ctx.lineTo(x + x_size + i, y - i);
+            ctx.moveTo(x - i/2, y - i);
+            ctx.lineTo(x + x_size + i/2, y - i);
             ctx.stroke();
         }
     }
@@ -121,7 +166,6 @@ class Graphics {
     rect(ctx, x,y,x_scale,y_scale) {
         ctx.beginPath()
         ctx.rect(x,y,x_scale,y_scale);
-        // ctx.stroke();
         ctx.fill();
     }
 
