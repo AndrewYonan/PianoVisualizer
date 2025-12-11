@@ -1,6 +1,6 @@
 
 async function load_note(note) {
-    const url = `${note}.wav`;
+    const url = `Sounds/${note}.wav`;
     const res = await fetch(url);
     const array_buf = await res.arrayBuffer();
     const audio_buf = await audio_context.decodeAudioData(array_buf);
@@ -24,7 +24,10 @@ class SoundBank {
 
     play_sound(pitch, duration) {
 
-        const note = "c6";
+
+        const note = ["a", "b", "c", "d", "e", "f", "g"][pitch % 6] + "4";
+        console.log(`Trying to play ${note}`);
+        
         duration = Math.max(duration, 0.5);
 
         if (!audio_context) {

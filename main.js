@@ -20,7 +20,7 @@ let clock = new Clock(W - 200, 100, FRAME_RATE);
 let audio_context = null;
 let note_buffers_loaded = false;
 const note_buffers = {};
-const NOTE_NAMES = ["c4", "c6"];
+const NOTE_NAMES = ["c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5"];
 
 
 init_event_handlers();
