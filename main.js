@@ -1,5 +1,4 @@
 const canvas = document.getElementById("canvas");
-const BG_MAIN_COLOR = "rgb(32, 32, 32)";
 const FRAME_RATE = 60;
 const W = 1200;
 const H = 600;
@@ -8,8 +7,7 @@ const iterator = setInterval(frame, 1000 / FRAME_RATE);
 const ctx = graphics.build_canvas(canvas, adaptive_res=true);
 const BAR_SPEED = 3;
 
-let sound_bank = new SoundBank();
-let piano = new Piano(W/2, H/2 + 175, sound_bank);
+let piano = new Piano(W/2, H/2 + 175);
 let FRAME = 0;
 let PAUSED = true;
 let midi_dump = new MIDI_DUMP();

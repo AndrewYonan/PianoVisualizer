@@ -20,7 +20,7 @@ class TimeChartGenerator {
                 if (j < this.events.length) {
                     
                     const dt = this.events[j].time - this.events[i].time;
-                    note_presses.push({note : this.events[i].note - 21, start : this.events[i].time, duration : dt})
+                    note_presses.push({note : this.events[i].note - 21, start : this.events[i].time, duration : dt, velocity : this.events[i].velocity})
 
                 }
                 else {

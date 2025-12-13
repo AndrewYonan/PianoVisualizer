@@ -21,6 +21,7 @@ class PianoNoteAnimation {
             let note = note_press.note;
             let start_time = note_press.start;
             let duration = note_press.duration;
+            let volume = note_press.velocity / 1500;
             let piano_key = this.piano.get_key(note);
 
             let pixels_per_second = this.bar_speed * this.frame_rate;
@@ -29,7 +30,7 @@ class PianoNoteAnimation {
             let bar_height = duration * (pixels_per_second);
             let bar_width = piano_key.x_size;
 
-            let bar = new NoteBar(note, duration, x, y, bar_width, bar_height, this.bar_speed, this.piano.break_line_y());
+            let bar = new NoteBar(note, duration, volume, x, y, bar_width, bar_height, this.bar_speed, this.piano.break_line_y());
             this.note_bars.push(bar);
 
         }
@@ -67,10 +68,11 @@ class PianoNoteAnimation {
             else if (this.note_bars[i].hitting_key) {
 
                 const duration = this.note_bars[i].duration;
+                const volume = this.note_bars[i].volume;
                 this.note_bars[i].update();
 
                 if (!this.piano.is_pressed(key)) {
-                    this.piano.press_key(key, duration);
+                    this.piano.press_key(key, duration, volume);
                 }
 
                 this.piano.set_key_LED_color(key, this.note_bars[i].color);

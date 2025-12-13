@@ -1,9 +1,10 @@
 
 
+const BG_MAIN_COLOR = "rgb(24, 24, 24)";
 const WHITE_KEY_COLOR = "rgb(255, 255, 255)";
 const BLACK_KEY_COLOR = "rgb(36, 36, 36)";
 const FRAME_COLOR = "rgb(75, 75, 75)";
-const BAR_COLOR = "rgb(255, 255, 255)";
+const BAR_COLOR = "rgb(255, 110, 102)";
 
 
 

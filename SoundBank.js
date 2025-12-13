@@ -12,19 +12,15 @@ async function load_note(note) {
 
 
 async function load_all_notes() {
-    
     const promises = NOTE_NAMES.map(load_note);
     await Promise.all(promises);
 }
 
 
 function pitch_number_to_note_str(pitch_number) {
-
     const octave = ["a", "aS", "b", "c", "cS", "d", "dS", "e", "f", "fS", "g", "gS"];
-
     const number = Math.trunc((pitch_number + 9) / 12);
-    const pitch = octave[pitch_number % 12];
-
+    const pitch = octave[(pitch_number) % 12];
     return pitch.toString() + number.toString();
 }
 
@@ -38,44 +34,36 @@ function get_note_names() {
 }
 
 
-class SoundBank {
+function play_sound(pitch, duration, volume) {
 
-    constructor() {
-        this.volume = 0.5;
+    const note = pitch_number_to_note_str(pitch);
+    duration = Math.max(duration, 0.4);
+
+    if (!audio_context) {
+        console.log("Audio context not loaded yet.");
+        return;
     }
 
-    play_sound(pitch, duration) {
+    const buffer = note_buffers[note];
 
 
-        const note = pitch_number_to_note_str(pitch);
-        duration = Math.max(duration, 0.5);
-
-        if (!audio_context) {
-            console.log("Audio context not loaded yet.");
-            return;
-        }
-    
-        const buffer = note_buffers[note];
-    
-    
-        if (!buffer) {
-            console.log(`No available sound for key ${note}`);
-            return;
-        }
-    
-        const source = audio_context.createBufferSource();
-        source.buffer = buffer;
-    
-        const gain_node = audio_context.createGain();
-        gain_node.gain.value = this.volume;
-    
-        source.connect(gain_node).connect(audio_context.destination);
-    
-        const now = audio_context.currentTime;
-        source.start(now);
-        source.stop(Math.min(now + duration, now + buffer.duration));
-    
-        return source;
-    
+    if (!buffer) {
+        console.log(`No available sound for key ${note}`);
+        return;
     }
+
+    const source = audio_context.createBufferSource();
+    source.buffer = buffer;
+
+    const gain_node = audio_context.createGain();
+    gain_node.gain.value = volume;
+
+    source.connect(gain_node).connect(audio_context.destination);
+
+    const now = audio_context.currentTime;
+    source.start(now);
+    source.stop(Math.min(now + duration, now + buffer.duration));
+
+    return source;
+    
 }

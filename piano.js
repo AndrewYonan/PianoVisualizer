@@ -24,7 +24,6 @@ class Piano {
         this.build_keys();
         this.ordered_keys = this.merge_white_and_black_keys();
 
-        this.sound_bank = sound_bank;
     }
 
     break_line_y() {
@@ -35,9 +34,8 @@ class Piano {
         return this.ordered_keys[note];
     }
     
-    press_key(i, duration) {
-        this.sound_bank.play_sound(i, duration);
-        // play_sound("c6", Math.max(duration, 0.5), 0.5);
+    press_key(i, duration, volume) {
+        play_sound(i, duration, volume);
         this.ordered_keys[i].press();
     }
 
@@ -197,7 +195,7 @@ class Piano {
     draw(ctx) {
         this.draw_frame(ctx);
         this.draw_keys(ctx);
-        this.draw_hit_line(ctx);
+        // this.draw_hit_line(ctx);
         this.draw_effects(ctx);
     }
 
