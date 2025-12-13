@@ -23,6 +23,7 @@ function init_event_handlers() {
         if (!note_buffers_loaded) {
             await load_all_notes();
             note_buffers_loaded = true;
+            console.log("All notes loaded...");
         }
 
     });

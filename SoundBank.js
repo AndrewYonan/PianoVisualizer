@@ -1,3 +1,6 @@
+const note_buffers = {};
+const NOTE_NAMES = get_note_names();
+
 
 async function load_note(note) {
     const url = `Sounds/${note}.wav`;
@@ -9,11 +12,30 @@ async function load_note(note) {
 
 
 async function load_all_notes() {
+    
     const promises = NOTE_NAMES.map(load_note);
     await Promise.all(promises);
-    console.log("All note samples loaded.");
 }
 
+
+function pitch_number_to_note_str(pitch_number) {
+
+    const octave = ["a", "aS", "b", "c", "cS", "d", "dS", "e", "f", "fS", "g", "gS"];
+
+    const number = Math.trunc((pitch_number + 9) / 12);
+    const pitch = octave[pitch_number % 12];
+
+    return pitch.toString() + number.toString();
+}
+
+
+function get_note_names() {
+    let names = [];
+    for (let i = 0; i < 88; ++i) {
+        names.push(pitch_number_to_note_str(i));
+    }
+    return names;
+}
 
 
 class SoundBank {
@@ -25,9 +47,7 @@ class SoundBank {
     play_sound(pitch, duration) {
 
 
-        const note = ["a", "b", "c", "d", "e", "f", "g"][pitch % 6] + "4";
-        console.log(`Trying to play ${note}`);
-        
+        const note = pitch_number_to_note_str(pitch);
         duration = Math.max(duration, 0.5);
 
         if (!audio_context) {
@@ -35,12 +55,11 @@ class SoundBank {
             return;
         }
     
-        const key = note.toLowerCase();
-        const buffer = note_buffers[key];
+        const buffer = note_buffers[note];
     
     
         if (!buffer) {
-            console.log(`No available sound for key ${key}`);
+            console.log(`No available sound for key ${note}`);
             return;
         }
     
